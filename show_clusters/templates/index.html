@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="icon" href="data:;base64,=">
+  <meta charset="utf-8">
+  <title>Product Clusters</title>
+  <style>
+    canvas {
+      border: 2px solid black;
+    }
+		table {
+			border-collapse: collapse;
+			width: 100%;
+			margin-bottom: 20px;
+		}
+		th, td {
+			/* padding: 8px; */
+			text-align: left;
+			border-bottom: 1px solid #ddd;
+      
+		}
+
+    .yoga {background-color:#FFC0CB}
+    .test {background-color:#CCCCCC}
+    .on_the_move {background-color:#FFFF00}
+    .yoga_and_training {background-color:#FF69B4}
+    .training {background-color:#00FF7F}
+    .running {background-color:#FF6347}
+    .swim {background-color:#ADD8E6}
+    .hiking {background-color:#9ACD32}
+    .golf {background-color:#FFFFE0}
+    .tennis {background-color:#FFE4C4}
+    .tennis_and_running {background-color:#87CEFA}
+    .golf_and_tennis {background-color:#BDB76B}
+    .other { background-color: #1E90FF }
+  </style>
+</head>
+
+<body>
+  <div id="viewport"></div>
+  <hr />
+  <div id="active" ></div> 
+  <div id="group"></div>
+  <script>
+
+    const WIDTH = window.innerWidth * 0.98;
+    const HEIGHT = window.innerHeight * 0.5;
+    let CONTEXT = undefined;
+    let CANVAS;
+    async function init() {
+      const x = `<canvas id="canvas" width="${WIDTH}" height="${HEIGHT}"> </canvas>`
+      document.getElementById("viewport").innerHTML = x
+      CANVAS = document.getElementById("canvas")
+      CANVAS.imageSmoothingEnabled = false // Just like in java! Disable antialiasing for sharper edges!
+      CONTEXT = canvas.getContext("2d")
+      CONTEXT.font = "15px Arial"
+      CONTEXT.strokeStyle = "#000000"
+      CONTEXT.lineWidth = 2
+    }
+  </script>
+  <script src="/static/colorFinder.js"> </script>
+  <script src="/static/logic.js"> </script>
+  <script>
+    async function main() { 
+      // The order matters! 
+      await init() // first 
+      console.log(`%c1 of 4: init()`, "background:yellow")
+      await getProducts() // second
+      console.log(`%c2 of 4: getProducts(): product groups = ${Object.keys(products).length}`, "background:yellow")
+      await getGroupColors()// third
+      console.log(`%c3 of 4: getGroupColors()`, "background:yellow")
+      await getClusters()// fourth
+      console.log(`%c4 of 4: getClusters(): clusters = ${Object.keys(clusters).length}`, "background:yellow")
+    }
+    main()
+  </script>
+
+</body>
+
+</html>
